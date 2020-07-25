@@ -21,6 +21,7 @@ d3.csv("https://f000.backblazeb2.com/file/wmcoursescraper/Fall2020.csv").then(
 		d3.select("body")
 			.append("div")
 			.text(delivery);
+
 		var margin = {top: 20, right: 20, bottom: 30, left: 40},
 		width = 960 - margin.left - margin.right,
 		height = 500 - margin.top - margin.bottom;
@@ -36,5 +37,25 @@ d3.csv("https://f000.backblazeb2.com/file/wmcoursescraper/Fall2020.csv").then(
 			.append("g")
 				.attr("transform",
 					"translate(" + margin.left + "," + margin.top + ")");
-	})
-;
+		// Scale the range of the data in the domains
+		x.domain(Object.keys(delivery));
+		y.domain([0, d3.max(delivery.values)]);
+	// append the rectangles for the bar chart
+	svg.selectAll(".bar")
+			.data(Object.keys(delivery))
+			.enter().append("rect")
+				.attr("class", "bar")
+				.attr("x", d => x(d))
+				.attr("width", x.bandwidth())
+				.attr("y", d => y(delivery[d]))
+				.attr("height", d => height - y(delivery[d]));
+
+	// add the x Axis
+	svg.append("g")
+		.attr("transform", "translate(0," + height + ")")
+		.call(d3.axisBottom(x));
+
+	// add the y Axis
+	svg.append("g")
+		.call(d3.axisLeft(y));
+	});
