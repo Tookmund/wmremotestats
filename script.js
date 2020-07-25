@@ -1,17 +1,16 @@
-d3.csv("https://f000.backblazeb2.com/file/wmcoursescraper/Fall2020.csv").then(
-	function(data) {
+const b2 = "https://f000.backblazeb2.com/file/wmcoursescraper/"
+d3.csv(`${b2}/subjects.csv`).then(data => {
 		d3.select("body")
 			.append("select")
 			.attr("id", "dept")
 			.selectAll("option")
-			.data(data.filter(function(value, index, self) {
-				return self.indexOf(value) == index;
-			}))
+			.data(data)
 			.enter().append("option")
-			.text(d => d.Subject)
-			.attr("value", (d, i) => d.Subject);
+			.text(d => d.Full)
+			.attr("value", (d, i) => d.Short);
+}
 
-
+d3.csv(`${b2}/Fall2020.csv`).then(data => {
 		var delivery = {"FS": 0, "MIX": 0, "RA": 0, "RSOC": 0, "RSOF": 0};
 		data.forEach(d => {
 			for (const p in delivery) {
