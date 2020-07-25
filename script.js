@@ -4,7 +4,9 @@ d3.csv("https://f000.backblazeb2.com/file/wmcoursescraper/Fall2020.csv").then(
 			.append("select")
 			.attr("id", "dept")
 			.selectAll("option")
-			.data(data)
+			.data(data.filter(function(value, index, self) {
+				return self.indexOf(value) == index;
+			})
 			.enter().append("option")
 			.text(d => d.Subject)
 			.attr("value", (d, i) => d.Subject);
