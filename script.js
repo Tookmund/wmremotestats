@@ -21,7 +21,11 @@ d3.csv(`${b2}/Fall2020.csv`).then(data => {
 	});
 	d3.select("body")
 		.append("div")
-		.text(JSON.stringify(delivery));
+		.selectAll("p")
+		.data(Object.keys(delivery))
+		.enter()
+		.append("p")
+			.text(d => `${d}: ${delivery[d]}`);
 
 	var margin = {top: 20, right: 20, bottom: 30, left: 40},
 	width = 960 - margin.left - margin.right,
