@@ -9,14 +9,6 @@ function updateGraph(dept) {
 	if (dept == "") data = delivery;
 	else data = deptdeliver[dept];
 
-	d3.select("#totals").selectAll("span").remove();
-	d3.select("#totals")
-		.selectAll("span")
-		.data(Object.keys(data))
-		.enter()
-		.append("span")
-			.text(d => `${d}: ${data[d]}`);
-
 	var margin = {top: 20, right: 20, bottom: 30, left: 40},
 	width = 960 - margin.left - margin.right,
 	height = 500 - margin.top - margin.bottom;
@@ -37,14 +29,18 @@ function updateGraph(dept) {
 			.attr("transform",
 				"translate(" + margin.left + "," + margin.top + ")");
 	// Scale the range of the data in the domains
-	x.domain(Object.keys(data));
+	xdom = []
+	for (const d in data) {
+		xdom.push(`${d}: ${data[d]}`);
+	}
+	x.domain(xdom);
 	y.domain([0, d3.max(Object.values(data))]);
 	// append the rectangles for the bar chart
 	svg.selectAll(".bar")
 		.data(Object.keys(data))
 		.enter().append("rect")
 			.attr("class", "bar")
-			.attr("x", d => x(d))
+			.attr("x", d => x(`${d}: ${data[d]}`));
 			.attr("width", x.bandwidth())
 			.attr("y", d => y(data[d]))
 			.attr("height", d => height - y(data[d]));
