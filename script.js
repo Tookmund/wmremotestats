@@ -39,7 +39,7 @@ d3.csv(`${b2}/Fall2020.csv`).then(data => {
 				"translate(" + margin.left + "," + margin.top + ")");
 	// Scale the range of the data in the domains
 	x.domain(Object.keys(delivery));
-	y.domain([0, Math.max(delivery.values())]);
+	y.domain([0, d3.max(Object.values(delivery))]);
 	// append the rectangles for the bar chart
 	svg.selectAll(".bar")
 		.data(Object.keys(delivery))
