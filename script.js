@@ -40,7 +40,7 @@ function updateGraph(dept) {
 		.data(Object.keys(data))
 		.enter().append("rect")
 			.attr("class", "bar")
-			.attr("x", d => x(`${d}: ${data[d]}`));
+			.attr("x", d => x(`${d}: ${data[d]}`))
 			.attr("width", x.bandwidth())
 			.attr("y", d => y(data[d]))
 			.attr("height", d => height - y(data[d]));
