@@ -1,6 +1,7 @@
 const b2 = "https://f000.backblazeb2.com/file/wmcoursescraper"
 d3.csv(`${b2}/subjects.csv`).then(data => {
 		d3.select("#dept")
+			.selectAll("option")
 			.data(data)
 			.enter()
 			.append("option")
