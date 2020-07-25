@@ -8,7 +8,7 @@ d3.csv(`${b2}/subjects.csv`).then(data => {
 			.enter().append("option")
 			.text(d => d.Full)
 			.attr("value", (d, i) => d.Short);
-}
+});
 
 d3.csv(`${b2}/Fall2020.csv`).then(data => {
 		var delivery = {"FS": 0, "MIX": 0, "RA": 0, "RSOC": 0, "RSOF": 0};
@@ -59,4 +59,4 @@ d3.csv(`${b2}/Fall2020.csv`).then(data => {
 	// add the y Axis
 	svg.append("g")
 		.call(d3.axisLeft(y));
-	});
+});
