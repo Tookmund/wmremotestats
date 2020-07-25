@@ -1,13 +1,11 @@
 const b2 = "https://f000.backblazeb2.com/file/wmcoursescraper"
 d3.csv(`${b2}/subjects.csv`).then(data => {
-		d3.select("body")
-			.append("select")
-			.attr("id", "dept")
-			.selectAll("option")
+		d3.select("#dept")
 			.data(data)
-			.enter().append("option")
-			.text(d => d.Full)
-			.attr("value", (d, i) => d.Short);
+			.enter()
+			.append("option")
+				.text(d => d.Full)
+				.attr("value", (d, i) => d.Short);
 });
 
 d3.csv(`${b2}/Fall2020.csv`).then(data => {
