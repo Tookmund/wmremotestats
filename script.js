@@ -1,5 +1,5 @@
 function newDelivery () {
-	return JSON.parse(JSON.stringify({"FS": 0, "MIX": 0, "RA": 0, "RSOC": 0, "RSOF": 0});
+	return JSON.parse(JSON.stringify({"FS": 0, "MIX": 0, "RA": 0, "RSOC": 0, "RSOF": 0}));
 }
 var delivery = null;
 var deptdeliver = null;
