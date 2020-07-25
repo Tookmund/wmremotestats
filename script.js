@@ -9,6 +9,14 @@ function updateGraph(dept) {
 	if (dept == "") data = delivery;
 	else data = deptdeliver[dept];
 
+	d3.select("#totals").selectAll("p").remove();
+	d3.select("#totals")
+		.selectAll("p")
+		.data(Object.keys(data))
+		.enter()
+		.append("p")
+			.text(d => `${d}: ${data[d]}`);
+
 	var margin = {top: 20, right: 20, bottom: 30, left: 40},
 	width = 960 - margin.left - margin.right,
 	height = 500 - margin.top - margin.bottom;
@@ -82,13 +90,6 @@ d3.csv(`${b2}/Fall2020.csv`).then(data => {
 			}
 		}
 	});
-	d3.select("body")
-		.append("div")
-		.selectAll("p")
-		.data(Object.keys(delivery))
-		.enter()
-		.append("p")
-			.text(d => `${d}: ${delivery[d]}`);
 
 	updateGraph("");
 });
