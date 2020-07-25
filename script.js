@@ -71,7 +71,7 @@ d3.csv(`${b2}/Fall2020.csv`).then(data => {
 		for (const p in delivery) {
 			if (d.Attributes.includes(p)) {
 				delivery[p] += 1;
-				if (!d.Subject in deptdeliver) {
+				if (!(d.Subject in deptdeliver)) {
 					deptdeliver[d.Subject] = newDelivery();
 				}
 				deptdeliver[d.Subject][p] += 1
