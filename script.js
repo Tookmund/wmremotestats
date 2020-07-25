@@ -22,7 +22,7 @@ d3.csv("https://f000.backblazeb2.com/file/wmcoursescraper/Fall2020.csv").then(
 		});
 		d3.select("body")
 			.append("div")
-			.text(delivery);
+			.text(JSON.stringify(delivery));
 
 		var margin = {top: 20, right: 20, bottom: 30, left: 40},
 		width = 960 - margin.left - margin.right,
