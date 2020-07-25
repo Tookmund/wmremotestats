@@ -9,12 +9,12 @@ function updateGraph(dept) {
 	if (dept == "") data = delivery;
 	else data = deptdeliver[dept];
 
-	d3.select("#totals").selectAll("p").remove();
+	d3.select("#totals").selectAll("span").remove();
 	d3.select("#totals")
-		.selectAll("p")
+		.selectAll("span")
 		.data(Object.keys(data))
 		.enter()
-		.append("p")
+		.append("span")
 			.text(d => `${d}: ${data[d]}`);
 
 	var margin = {top: 20, right: 20, bottom: 30, left: 40},
