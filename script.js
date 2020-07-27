@@ -3,6 +3,10 @@ function newDelivery () {
 }
 var delivery = null;
 var deptdeliver = null;
+var sizedeliver = {};
+for (var i in ["5", "10", "20", "30", "40", "50"]) {
+	sizedeliver[i] = newDelivery()
+}
 
 function updateGraph(dept) {
 	var data;
@@ -83,6 +87,11 @@ d3.csv(`${b2}/Fall2020.csv`).then(data => {
 					deptdeliver[d.Subject] = newDelivery();
 				}
 				deptdeliver[d.Subject][p] += 1
+				for (var k in sizedeliver) {
+					if (+d.Enrolled < +k) {
+						sizedeliver[k][p] += 1
+					}
+				}
 			}
 		}
 	});
