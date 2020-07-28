@@ -38,6 +38,12 @@ function updateGraph(dept) {
 		data = deptdeliver[dept];
 		sizedata = deptsizedeliver[dept];
 	}
+	d3.select("#deptgraph").selectAll("*").remove();
+	d3.select("#sizegraph").selectAll("svg").remove();
+	if (data == undefined) {
+		d3.select("#deptgraph").append("p").text("No Data!");
+		return;
+	}
 
 	var x = d3.scaleBand()
 		.range([0, width])
@@ -45,7 +51,6 @@ function updateGraph(dept) {
 	var y = d3.scaleLinear()
 		.range([height, 0]);
 
-	d3.select("#deptgraph").selectAll("svg").remove();
 
 	var svg = d3.select("#deptgraph")
 		.append("svg")
@@ -82,7 +87,6 @@ function updateGraph(dept) {
 		.call(d3.axisLeft(y));
 
 	// Size Graph
-	d3.select("#sizegraph").selectAll("svg").remove();
 
 	var svg = d3.select("#sizegraph")
 		.append("svg")
