@@ -90,8 +90,8 @@ function updateGraph(dept) {
 	var y = d3.scaleLinear()
 		.domain([0,d3.max(sizedeliver.map(function(v, i, self) {
 			var total = 0;
-			for (var d in sizedeliver[i]) {
-				total += sizedeliver[i][d];
+			for (var d in v) {
+				if (d != "size") total += v[d];
 			}
 			return total;
 		}))])
