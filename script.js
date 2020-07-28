@@ -2,17 +2,22 @@ function newDelivery () {
 	return JSON.parse(JSON.stringify({"FS": 0, "MIX": 0, "RA": 0, "RSOC": 0, "RSOF": 0}));
 }
 
-var sizes = ["5", "10", "20", "30", "40", "50"];
-var sizedeliver = [];
+const sizes = ["5", "10", "20", "30", "40", "50"];
 
-for (var i in sizes) {
-	var s = newDelivery();
-	s["size"] = sizes[i];
-	sizedeliver.push(s);
+function newSizeDelivery () {
+	var ret = [];
+	for (var i in sizes) {
+		var s = newDelivery();
+		s["size"] = sizes[i];
+		ret.push(s);
+	}
+	return ret;
 }
 
 var delivery = null;
 var deptdeliver = null;
+var sizedeliver = null
+var deptsizedeliver = null;
 
 const margin = {top: 20, right: 20, bottom: 30, left: 40},
 width = 960 - margin.left - margin.right,
@@ -20,8 +25,15 @@ height = 500 - margin.top - margin.bottom;
 
 function updateGraph(dept) {
 	var data;
-	if (dept == "") data = delivery;
-	else data = deptdeliver[dept];
+	var sizedata;
+	if (dept == "") {
+		data = delivery;
+		sizedata = sizedeliver;
+	}
+	else {
+		data = deptdeliver[dept];
+		sizedata = deptsizedeliver[dept];
+	}
 
 	var x = d3.scaleBand()
 		.range([0, width])
@@ -80,8 +92,8 @@ function updateGraph(dept) {
 			.attr("transform",
 				"translate(" + margin.left + "," + margin.top + ")");
 
-	var groups = d3.map(sizedeliver, d => d.size).keys();
-	var subgroups = Object.keys(sizedeliver.filter(k => k !== "size"));
+	var groups = d3.map(sizedata, d => d.size).keys();
+	var subgroups = Object.keys(sizedata.filter(k => k !== "size"));
 
 	var x = d3.scaleBand()
 		.domain(groups)
@@ -93,7 +105,7 @@ function updateGraph(dept) {
 		.call(d3.axisBottom(x).tickSizeOuter(0));
 
 	var y = d3.scaleLinear()
-		.domain([0,d3.max(sizedeliver.map(function(v, i, self) {
+		.domain([0,d3.max(sizedata.map(function(v, i, self) {
 			var total = 0;
 			for (var d in v) {
 				if (d != "size") total += v[d];
@@ -108,7 +120,7 @@ function updateGraph(dept) {
 
 		var stackedData = d3.stack()
 			.keys(Object.keys(data))
-			(sizedeliver);
+			(sizedata);
 
 		  // Show the bars
 		  svg.append("g")
@@ -146,19 +158,23 @@ d3.csv(`${b2}/subjects.csv`).then(data => {
 
 d3.csv(`${b2}/Fall2020.csv`).then(data => {
 	delivery = newDelivery();
-	deptdeliver = {}
+	sizedeliver = newSizeDelivery();
+	deptdeliver = {};
+	deptsizedeliver = {};
 	data.forEach(d => {
 		for (const p in delivery) {
 			if (d.Attributes.includes(p)) {
 				delivery[p] += 1;
 				if (!(d.Subject in deptdeliver)) {
 					deptdeliver[d.Subject] = newDelivery();
+					deptsizedeliver[d.Subject] = newSizeDelivery();
 				}
 				deptdeliver[d.Subject][p] += 1
 				for (var i in sizedeliver) {
 					if (+d.Enrolled == 0) break;
 					if (+d.Enrolled < +sizedeliver[i]["size"] || i == sizedeliver.length - 1) {
 						sizedeliver[i][p] += 1
+						deptsizedeliver[d.Subject][i][p] += 1;
 						break;
 					}
 				}
