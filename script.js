@@ -107,7 +107,6 @@ function updateGraph(dept) {
 		var stackedData = d3.stack()
 			.keys(Object.keys(data))
 			(sizedeliver);
-		console.log(stackedData);
 
 		  // Show the bars
 		  svg.append("g")
@@ -122,7 +121,7 @@ function updateGraph(dept) {
 				.enter().append("rect")
 					.attr("x", function(d) { return x(d.data.size); })
 					.attr("y", function(d) { return y(d[1]); })
-					.attr("height", function(d) { console.log(d); return y(d[0]) - y(d[1]); })
+					.attr("height", function(d) { return y(d[0]) - y(d[1]); })
 					.attr("width", x.bandwidth());
 }
 
