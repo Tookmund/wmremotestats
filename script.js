@@ -29,6 +29,10 @@ function updateGraph(dept) {
 	var y = d3.scaleLinear()
 		.range([height, 0]);
 
+	var color = d3.scaleOrdinal()
+		.domain(Object.keys(newDelivery()))
+		.range(['#00B388', '#CAB64B', '#84344E', '#64CCC9', '#E56A54'])
+
 	d3.select("#deptgraph").selectAll("svg").remove();
 
 	var svg = d3.select("#deptgraph")
@@ -53,7 +57,8 @@ function updateGraph(dept) {
 			.attr("x", d => x(`${d}: ${data[d]}`))
 			.attr("width", x.bandwidth())
 			.attr("y", d => y(data[d]))
-			.attr("height", d => height - y(data[d]));
+			.attr("height", d => height - y(data[d]))
+			.attr("fill", d => color(d));
 
 	// add the x Axis
 	svg.append("g")
@@ -100,9 +105,6 @@ function updateGraph(dept) {
 		svg.append("g")
 			.call(d3.axisLeft(y));
 
-		var color = d3.scaleOrdinal()
-			.domain(subgroups)
-			.range(['#00B388', '#CAB64B', '#84344E', '#64CCC9', '#E56A54'])
 
 		var stackedData = d3.stack()
 			.keys(Object.keys(data))
