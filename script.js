@@ -155,7 +155,7 @@ d3.csv(`${b2}/Fall2020.csv`).then(data => {
 				deptdeliver[d.Subject][p] += 1
 				for (var i in sizedeliver) {
 					if (+d.Enrolled == 0) break;
-					if (+d.Enrolled < +sizedeliver[i]["size"]) {
+					if (+d.Enrolled < +sizedeliver[i]["size"] || i == sizedeliver.length - 1) {
 						sizedeliver[i][p] += 1
 						break;
 					}
