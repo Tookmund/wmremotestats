@@ -160,7 +160,7 @@ d3.csv(`${b2}/subjects.csv`).then(data => {
 		});
 });
 
-d3.csv(`${b2}/Fall2020.csv`).then(data => {
+d3.csv(`${b2}/Spring2021.csv`).then(data => {
 	delivery = newDelivery();
 	sizedeliver = newSizeDelivery();
 	deptdeliver = {};
